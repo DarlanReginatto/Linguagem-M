@@ -1,12 +1,13 @@
-( Serie as text ) as text =>
+( Texto as text ) as text =>
 
 let
-    //Serie = "BFLPSC - 1º ANO",
-    ListaDe =  { "NIVEL", "º", "ª", "1ª ETAPA - CICLO 1", "2ª ETAPA - CICLO 1", "3ª ETAPA - CICLO 1", "4ª ETAPA - CICLO 1", "5ª ETAPA - CICLO 1", "6ª ETAPA - CICLO 1", "1ª ETAPA - CICLO 2", "2ª ETAPA - CICLO 2", "3ª ETAPA - CICLO 2", "4ª ETAPA - CICLO 2", "5ª ETAPA - CICLO 2", "6ª ETAPA - CICLO 2", "7ª ETAPA - CICLO 2", "MANHÃ", "TARDE" },
-    ListaPara = { "NÍVEL", ".º", ".ª", "1.ºC-1.ªE", "1.ºC-2.ªE", "1.ºC-3.ªE", "1.ºC-4.ªE", "1.ºC-5.ªE", "1.ºC-6.ªE", "2.ºC-1.ªE", "2.ºC-2.ªE", "2.ºC-3.ªE", "2.ºC-4.ªE", "2.ºC-5.ªE", "2.ºC-6.ªE", "2.ºC-7.ªE", "MATUTINO", "VESPERTINO" },
-    ListaSerie = Text.Split(Serie, " "),
-    Zip = List.Zip({ListaDe, ListaPara}),
-    Substituir = List.ReplaceMatchingItems(ListaSerie, Zip),
-    JuntarTexto = Text.Combine(Substituir, " ")
+    // Texto = "TEXTO - 1º ANO",                                        // teste da função
+    RemoverEspaco = Text.Trim(Texto),                                   // remover espaços da esquerda e direita
+    ListaTexto = Text.Split(RemoverEspaco, " "),                        // transofrmar o texto em lista separada por espaço em branco
+    ListaDe =  { "NIVEL", "1º", "2º", "3º", "4º", "5º", "6º", "7º", "8º", "9º", "1ª", "2ª", "3ª", "1ª ETAPA - CICLO 1", "2ª ETAPA - CICLO 1", "3ª ETAPA - CICLO 1", "4ª ETAPA - CICLO 1", "5ª ETAPA - CICLO 1", "6ª ETAPA - CICLO 1", "1ª ETAPA - CICLO 2", "2ª ETAPA - CICLO 2", "3ª ETAPA - CICLO 2", "4ª ETAPA - CICLO 2", "5ª ETAPA - CICLO 2", "6ª ETAPA - CICLO 2", "7ª ETAPA - CICLO 2", "MANHÃ", "TARDE" },
+    ListaPara = { "NÍVEL", "1.º", "2.º", "3.º", "4.º", "5.º", "6.º", "7.º", "8.º", "9.º", "1.ª", "2.ª", "3.ª", "1.ºC-1.ªE", "1.ºC-2.ªE", "1.ºC-3.ªE", "1.ºC-4.ªE", "1.ºC-5.ªE", "1.ºC-6.ªE", "2.ºC-1.ªE", "2.ºC-2.ªE", "2.ºC-3.ªE", "2.ºC-4.ªE", "2.ºC-5.ªE", "2.ºC-6.ªE", "2.ºC-7.ªE", "MATUTINO", "VESPERTINO" },
+    DePara = List.Zip({ListaDe, ListaPara}),                            // criando lista de para
+    Substituir = List.ReplaceMatchingItems(ListaTexto, DePara),         // substitui no texto conforme o de para
+    JuntarTexto = Text.Combine(Substituir, " ")                         // junta novamente o texto com o de para aplicado
 in
     JuntarTexto
