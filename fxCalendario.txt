@@ -1,0 +1,34 @@
+// função para criar tabela calendário de forma dimamica ao selecionar coluna de datas em uma consulta
+
+(DataInicial as list, DataFinal as list) as date =>
+
+let
+    //DataInicial = #date(2020, 1, 1),
+    //DataFinal  = #date(2020, 12, 31),
+    DataInicial = Date.StartOfYear(List.Min(DataInicial)),
+    DataFinal =  Date.EndOfYear(List.Max(DataFinal)),
+    Datas = List.Dates(
+        DataInicial,
+        Duration.Days(DataFinal - DataInicial) + 1,
+        #duration(1,0,0,0)
+    ),
+    Cabecalho = type table [
+        Data = date,
+        Ano = Int32.Type,
+        Mes = Int32.Type,
+        NomeMes = text,
+        MesAbr = text
+    ],
+    Registros = List.Transform(
+        Datas,
+        each {
+            _,
+            Date.Year(_),
+            Date.Month(_),
+            Text.Proper(Date.MonthName(_)),
+            Text.Start(Text.Proper(Date.MonthName(_)), 3)
+        }
+    ),
+    Tabela = #table(Cabecalho, Registros)
+in
+    Tabela
