@@ -1,0 +1,12 @@
+( Serie as text ) as text =>
+
+let
+    //Serie = "BFLPSC - 1º ANO",
+    ListaDe =  { "NIVEL", "º", "ª", "1ª ETAPA - CICLO 1", "2ª ETAPA - CICLO 1", "3ª ETAPA - CICLO 1", "4ª ETAPA - CICLO 1", "5ª ETAPA - CICLO 1", "6ª ETAPA - CICLO 1", "1ª ETAPA - CICLO 2", "2ª ETAPA - CICLO 2", "3ª ETAPA - CICLO 2", "4ª ETAPA - CICLO 2", "5ª ETAPA - CICLO 2", "6ª ETAPA - CICLO 2", "7ª ETAPA - CICLO 2", "MANHÃ", "TARDE" },
+    ListaPara = { "NÍVEL", ".º", ".ª", "1.ºC-1.ªE", "1.ºC-2.ªE", "1.ºC-3.ªE", "1.ºC-4.ªE", "1.ºC-5.ªE", "1.ºC-6.ªE", "2.ºC-1.ªE", "2.ºC-2.ªE", "2.ºC-3.ªE", "2.ºC-4.ªE", "2.ºC-5.ªE", "2.ºC-6.ªE", "2.ºC-7.ªE", "MATUTINO", "VESPERTINO" },
+    ListaSerie = Text.Split(Serie, " "),
+    Zip = List.Zip({ListaDe, ListaPara}),
+    Substituir = List.ReplaceMatchingItems(ListaSerie, Zip),
+    JuntarTexto = Text.Combine(Substituir, " ")
+in
+    JuntarTexto
